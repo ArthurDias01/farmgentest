@@ -3,6 +3,7 @@ import { Fragment, ReactNode } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { Slot } from 'expo-router'
 import { AuthProvider } from '@/contexts/Auth';
+import Toast from 'react-native-toast-message';
 
 
 export default function RootLayout() {
@@ -20,6 +21,7 @@ export default function RootLayout() {
       <AuthProvider>
         <SafeAreaView style={{ flex: 1 }}>
             <Slot initialRouteName='(auth)/sign-in' />
+            <Toast />
         </SafeAreaView>
       </AuthProvider>
   )

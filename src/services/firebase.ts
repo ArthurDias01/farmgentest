@@ -15,6 +15,7 @@ export const firebaseConfig = {
   appId: String(process.env.EXPO_PUBLIC_FIREBASE_APP_ID),
 };
 
+console.log('firebaseConfig', firebaseConfig)
 
 function checkFirebaseInit() {
   if (getApps().length === 0) {

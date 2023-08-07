@@ -1,4 +1,4 @@
-import { router,  } from 'expo-router';
+import { router, } from 'expo-router';
 import React, {
   useState,
   useContext,
@@ -11,7 +11,7 @@ import React, {
 import { Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { auth } from '../services/firebase';
-
+import Toast from 'react-native-toast-message'
 
 import {
   createUserWithEmailAndPassword,
@@ -54,24 +54,51 @@ function AuthProvider({ children }: AuthProviderProps) {
     if (storedUser) {
       const userData = JSON.parse(storedUser);
       setUser(userData);
+      Toast.show({
+        type: 'success',
+        text1: `Welcome back! ${userData.displayName ?? userData.email} 🚀`,
+        visibilityTime: 3000,
+      })
     }
     setIsLogginIn(false);
   };
 
   async function signIn(email: string, password: string) {
+    // console.log('signIn', email, password)
     setIsLogginIn(true);
     if (!email || !password) {
       setIsLogginIn(false);
+
+      Toast.show({
+        type: 'error',
+        text1: `Please enter your email and password`,
+        visibilityTime: 3000,
+      })
+
       return Alert.alert('Email or password invalid', 'Please, check your email and password');
     }
     try {
       const credentials = await signInWithEmailAndPassword(auth, email, password)
       const userCredentials = credentials.user;
       setUser(userCredentials);
+
+      Toast.show({
+        type: 'success',
+        text1: `Welcome back! ${userCredentials.displayName ?? userCredentials.email}`,
+        visibilityTime: 3000,
+      })
+
       setIsLogginIn(false);
     } catch (error) {
-      setIsLogginIn(false);
-      return Alert.alert('Email or password invalid', 'Please, check your email and password');
+      if(error instanceof Error) {
+        setIsLogginIn(false);
+        Toast.show({
+          type: 'error',
+          text1: `${error?.message ? error.message : 'Something went wrong, please try again.'}`,
+          visibilityTime: 3000,
+        })
+        return Alert.alert('Email or password invalid', 'Please, check your email and password');
+      }
     }
   };
 
@@ -99,7 +126,14 @@ function AuthProvider({ children }: AuthProviderProps) {
       setUser(userCredentials);
       await sendEmailVerification(userCredentials);
     } catch (error) {
-      Alert.alert('Email or password invalid', 'Please, check your email and password');
+      if(error instanceof Error) {
+        Toast.show({
+          type: 'error',
+          text1: `${error?.message ? error.message : 'Something went wrong, please try again.'}`,
+          visibilityTime: 3000,
+        })
+        return Alert.alert('Email or password invalid', 'Please, check your email and password');
+      }
     }
   };
 
@@ -116,8 +150,15 @@ function AuthProvider({ children }: AuthProviderProps) {
   }
 
   async function signOut() {
-    await signOutFirebase(auth);
-    await AsyncStorage.removeItem(USER_COLLECTION);
+    await Promise.allSettled([
+      AsyncStorage.removeItem(USER_COLLECTION),
+      signOutFirebase(auth),
+    ])
+    Toast.show({
+      type: 'info',
+      text1: `See you soon!👋`,
+      visibilityTime: 3000,
+    })
     setUser(null);
   }
 
