@@ -20,6 +20,7 @@ import { useAuth } from "@/contexts/Auth";
 import { Link, router } from "expo-router";
 import { ScrollView } from "react-native-gesture-handler";
 import { styles } from './style'
+import Toast from "react-native-toast-message";
 
 interface FormValues {
   displayName: string;
@@ -86,6 +87,11 @@ export default function AddFarm() {
       }
       await setDoc(doc(db, "farms", uuidv4()), farmData)
       Alert.alert('Farm added successfully')
+      Toast.show({
+        type: "success",
+        text1: "Success!",
+        text2: "Farm added to your Farms list",
+      })
       router.push('/(tabs)/')
     } catch (error) {
       console.log(error)
@@ -141,10 +147,15 @@ export default function AddFarm() {
     try {
       const fileRef = ref(storage, uuidv4());
       await uploadBytes(fileRef, blob);
-      blob.close();
+      // blob.close();
       return await getDownloadURL(fileRef);
     } catch (error) {
       console.log(error);
+      Toast.show({
+        type: "error",
+        text1: "Error",
+        text2: "An error occurred while uploading image",
+      })
       Alert.alert("An error occurred while uploading image");
     }
   }
