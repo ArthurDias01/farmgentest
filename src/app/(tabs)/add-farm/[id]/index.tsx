@@ -40,8 +40,8 @@ type FormSubmitFormik = {
   farmAddress_geoLocation_lng: number;
 }
 
-const API_KEY = "AIzaSyBeYJE8YpRJJNggMOArkzcgMnM4Fpxm3Gs"
-const GOOGLE_API_URL = 'https://maps.googleapis.com/maps/api/geocode/json'
+const API_KEY = process.env.EXPO_PUBLIC_GOOGLE_API_KEY;
+const GOOGLE_API_URL = process.env.EXPO_PUBLIC_GOOGLE_API_URL;
 
 const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
 var poBoxantiPattern = /^ *((#\d+)|((box|bin)[-. \/\\]?\d+)|(.*p[ \.]? ?(o|0)[-. \/\\]? *-?((box|bin)|b|(#|n|num|number)?\d+))|(p(ost|ostal)? *(o(ff(ice)?)?)? *((box|bin)|b)? *(#|n|num|number)*\d+)|(p *-?\/?(o)? *-?box)|post office box|((box|bin)|b) *(#|n|num|number)? *\d+|(#|n|num|number) *\d+)/i;
