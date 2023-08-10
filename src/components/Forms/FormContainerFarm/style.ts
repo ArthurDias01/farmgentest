@@ -4,8 +4,7 @@ import { theme } from '@/styles/theme';
 export const styles = StyleSheet.create({
   container: {
     width: '100%',
-    height: '100%',
-    maxHeight: 800,
+    marginVertical: 10,
     flexDirection: 'column',
     alignContent: 'center',
     maxWidth: Platform.OS === 'web' ? 400 : '95%',

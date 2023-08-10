@@ -14,8 +14,8 @@ export const CustomButton = ({ title, color, ...rest }: CustomButton) => {
 
   return (
     <TouchableOpacity
-    style={[{ backgroundColor: color ? theme.colors[color] : theme.colors.accent }, styles.buttonStyle, rest.style]}
     {...rest}
+    style={[{ backgroundColor: color ? theme.colors[color] : theme.colors.accent }, styles.buttonStyle, rest.style]}
     activeOpacity={0.8}
     >
       <Text style={styles.text}>{title}</Text>

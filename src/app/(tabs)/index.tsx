@@ -78,7 +78,7 @@ export default function Home() {
           <CustomButton title="Sign In" onPress={() => router.push("/(auth)/sign-in")} />
         </View>
       }
-      {user && <AddButton onPress={() => router.push("/(tabs)/add-farm")} />}
+      {user && <AddButton onPress={() => router.push("/(tabs)/add-farm/null")} />}
     </View >
   )
 }

@@ -4,14 +4,13 @@ import { RFValue } from 'react-native-responsive-fontsize';
 
 export const styles = StyleSheet.create({
   mainView: {
-    flex: 1,
+    height: RFValue(80),
     flexDirection: 'row',
     justifyContent: 'space-between',
     gap: 12,
     width: '100%',
     maxWidth: Platform.OS === "web" ? 400 : 'auto',
     marginVertical: Platform.OS === "web" ? RFValue(4) : 0,
-    height: RFValue(150),
     borderRadius: theme.radius.medium,
     backgroundColor: theme.colors.darkGrey,
     shadowColor: theme.colors.black,
@@ -23,7 +22,7 @@ export const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   imageWrapper: {
-    width: '60%',
+    width: '50%',
     alignItems: 'center',
     justifyContent: 'center',
   },
